@@ -1,32 +1,26 @@
-// src/seed.ts
-import { DataSource } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { AppDataSource } from 'src/data-source';
-import { User } from 'src/users/user.entity';
+// seed.ts
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from 'src/app.module';
+import { UsersService } from 'src/users/users.service';
 
-async function seed() {
-  await AppDataSource.initialize();
 
-  const userRepo = AppDataSource.getRepository(User);
+async function bootstrap() {
+  const app = await NestFactory.createApplicationContext(AppModule);
 
-  const existing = await userRepo.findOne({ where: { username: 'admin' } });
-  if (!existing) {
-    const password = await bcrypt.hash('password123', 10);
-    const adminUser = userRepo.create({
-      username: 'admin',
-      password,
-      role: 'admin' as 'admin',
-    });
-    await userRepo.save(adminUser);
-    console.log('✅ Admin user seeded');
-  } else {
-    console.log('ℹ️ Admin user already exists');
-  }
+  const usersService = app.get(UsersService);
 
-  await AppDataSource.destroy();
+  await usersService.create({
+    username: 'admin',
+    password: 'admin123', // your service should hash this
+    role: 'admin',
+  });
+
+  await usersService.create({
+    username: 'staff',
+    password: 'staff123',
+    role: 'user',
+  });
+
+  await app.close();
 }
-
-seed().catch((err) => {
-  console.error('❌ Seeding error:', err);
-  process.exit(1);
-});
+bootstrap();
