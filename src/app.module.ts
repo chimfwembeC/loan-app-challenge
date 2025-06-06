@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SeedModule } from './seed/seed.module';
+import { ClientModule } from './client/client.module';
+import { LoanModule } from './loan/loan.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { SeedModule } from './seed/seed.module';
     AuthModule,
     UsersModule,
     SeedModule,
+    ClientModule,
+    LoanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -68,5 +68,5 @@ A backend API for managing loan applications, clients, and user accounts using N
 ### 1. Clone Repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/loan-app.git
+git clone https://github.com/chimfwembeC/loan-app-challenge.git
 cd loan-app

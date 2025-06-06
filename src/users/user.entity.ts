@@ -1,3 +1,5 @@
+import { Client } from "src/client/client.entity";
+import { Loan } from "src/loan/loan.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -14,6 +16,9 @@ export class User {
   @Column({ default: 'user' })
   role: 'user' | 'admin';
 
-//   @OneToMany(() => Client, client => client.user)
-//   clients: Client[];
+  @OneToMany(() => Client, client => client.user)
+  clients: Client[];
+  
+  @OneToMany(() => Loan, (loan) => loan.client)
+  loans: Loan[];
 }
