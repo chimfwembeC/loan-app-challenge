@@ -4,8 +4,12 @@ import { LoanService } from '../loan/loan.service';
 import { CreateClientDto } from './client.dto';
 import { Client } from './client.entity';
 import { Loan } from '../loan/loan.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { UseGuards } from '@nestjs/common';
+
 
 @Controller('clients')
+@UseGuards(AuthGuard)
 export class ClientController {
   constructor(
     private readonly clientService: ClientService,
@@ -13,14 +17,29 @@ export class ClientController {
   ) {}
 
   @Post()
-  async createClient(@Body() createClientDto: CreateClientDto): Promise<Client> {
-    return this.clientService.createClient(createClientDto);
+  async createClient(
+    @Body() createClientDto: CreateClientDto,
+    @Req() req: Request,
+  ): Promise<Client> {
+    const user = req['user'];
+    return this.clientService.createClient(createClientDto, user);
   }
 
   @Get()
-  async getAllClients(): Promise<Client[]> {
-    return this.clientService.findAllClients();
+  async getAllClients(@Req() req): Promise<Client[]> {
+    const user = req['user'];
+    return this.clientService.findClients(user);
   }
+
+  @Get(':id')
+  async getClient(
+    @Param('id', ParseIntPipe) clientId: number,
+    @Req() req
+  ): Promise<Client> {
+    const user = req.user;
+    return this.clientService.findClientById(clientId, user);
+  }
+  
 
   @Get(':id/loans')
   async getLoansByClient(

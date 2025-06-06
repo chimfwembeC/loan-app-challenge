@@ -52,7 +52,7 @@ export class LoanService {
     const client = await this.clientRepository.findOne({
       where: {
         id: clientId,
-        user: { userId }, // ✅ fix here too
+        user: { userId },
       },
       relations: ['user'],
     });
