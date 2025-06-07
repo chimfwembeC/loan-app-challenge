@@ -38,12 +38,6 @@ import {
       const user = req['user'];
       return this.loanService.createLoan(dto, user.userId);
     }
-  
-    @Get('client/:clientId')
-    async getClientLoans(@Param('clientId') clientId: number, @Req() req: Request) {
-      const user = req['user'];
-      return this.loanService.findLoansByClient(Number(clientId), user.userId);
-    }
 
   }
   
