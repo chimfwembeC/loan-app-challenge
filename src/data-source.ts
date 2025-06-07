@@ -21,7 +21,7 @@ const options: DataSourceOptions & SeederOptions = {
   entities: [User, Client, Loan],
   migrations: ['src/migrations/*.ts'],
   subscribers: [],
-  seeds: [UserSeeder, ClientSeeder, LoanSeeder], 
+  seeds: [UserSeeder, ClientSeeder, LoanSeeder],
 };
 
 export const AppDataSource = new DataSource(options);

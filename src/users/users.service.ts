@@ -54,9 +54,10 @@ export class UsersService {
     return bcrypt.hash(password, saltRounds);
   }
 
-  async validatePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+  async validatePassword(
+    plainPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
     return bcrypt.compare(plainPassword, hashedPassword);
   }
-  
 }
-

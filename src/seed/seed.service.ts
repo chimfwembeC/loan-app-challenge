@@ -22,7 +22,6 @@ export class SeedService {
     // 2. Seed clients
     await clientSeeder.run(this.dataSource);
 
-
     // 4. Seed loans using the created clients
     await loanSeeder.run(this.dataSource);
 

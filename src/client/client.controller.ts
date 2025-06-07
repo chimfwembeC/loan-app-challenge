@@ -1,12 +1,20 @@
-import { Controller, Post, Body, Get, Param, ParseIntPipe, Req } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  ParseIntPipe,
+  Req,
+  Patch,
+} from '@nestjs/common';
 import { ClientService } from './client.service';
 import { LoanService } from '../loan/loan.service';
-import { CreateClientDto } from './client.dto';
+import { CreateClientDto, UpdateClientDto } from './client.dto';
 import { Client } from './client.entity';
 import { Loan } from '../loan/loan.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
-
 
 @Controller('clients')
 @UseGuards(AuthGuard)
@@ -25,6 +33,16 @@ export class ClientController {
     return this.clientService.createClient(createClientDto, user);
   }
 
+  @Patch(':id')
+  async updateClient(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateClientDto,
+    @Req() req,
+  ): Promise<Client> {
+    const user = req.user;
+    return this.clientService.updateClient(id, dto, user);
+  }
+
   @Get()
   async getAllClients(@Req() req): Promise<Client[]> {
     const user = req['user'];
@@ -34,19 +52,18 @@ export class ClientController {
   @Get(':id')
   async getClient(
     @Param('id', ParseIntPipe) clientId: number,
-    @Req() req
+    @Req() req,
   ): Promise<Client> {
     const user = req.user;
     return this.clientService.findClientById(clientId, user);
   }
-  
 
   @Get(':id/loans')
   async getLoansByClient(
     @Param('id', ParseIntPipe) clientId: number,
-    @Req() req: any,  // Request with user injected by AuthGuard
+    @Req() req: any, // Request with user injected by AuthGuard
   ): Promise<Loan[]> {
-    const userId = req.user.userId;  // This assumes your JWT payload has userId
+    const userId = req.user.userId; // This assumes your JWT payload has userId
     return this.loanService.findLoansByClient(clientId, userId);
   }
 }

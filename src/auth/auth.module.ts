@@ -21,7 +21,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService,
+  providers: [
+    AuthService,
     // {
     //   provide: APP_GUARD,
     //   useClass: AuthGuard,

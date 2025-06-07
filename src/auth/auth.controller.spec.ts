@@ -17,9 +17,7 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [
-        { provide: AuthService, useValue: mockAuthService },
-      ],
+      providers: [{ provide: AuthService, useValue: mockAuthService }],
     })
       .overrideGuard(AuthGuard)
       .useValue(mockAuthGuard)
@@ -40,7 +38,10 @@ describe('AuthController', () => {
       const body = { username: 'testuser', password: 'testpass' };
       const result = await controller.signIn(body);
 
-      expect(mockAuthService.signIn).toHaveBeenCalledWith('testuser', 'testpass');
+      expect(mockAuthService.signIn).toHaveBeenCalledWith(
+        'testuser',
+        'testpass',
+      );
       expect(result).toEqual(mockResult);
     });
   });

@@ -5,11 +5,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .setTitle('Loan API')
-  .setDescription('Loan Application System')
-  .setVersion('1.0')
-  .addBearerAuth()
-  .build();
+    .setTitle('Loan API')
+    .setDescription('Loan Application System')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

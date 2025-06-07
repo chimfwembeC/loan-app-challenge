@@ -33,24 +33,27 @@ A backend API for managing loan applications, clients, and user accounts using N
 ## 📦 API Endpoints
 
 ### 🔐 Auth (under `/auth`)
-| Method | Route            | Description                   |
-|--------|------------------|-------------------------------|
-| POST   | /auth/register   | Register a new user           |
-| POST   | /auth/login      | Login and get JWT             |
-| GET    | /auth/profile    | Get logged-in user info       |
-| PATCH  | /auth/profile    | Update logged-in user's info  |
+
+| Method | Route          | Description                  |
+| ------ | -------------- | ---------------------------- |
+| POST   | /auth/register | Register a new user          |
+| POST   | /auth/login    | Login and get JWT            |
+| GET    | /auth/profile  | Get logged-in user info      |
+| PATCH  | /auth/profile  | Update logged-in user's info |
 
 ### 👤 Clients (authenticated)
+
 | Method | Route              | Description                         |
-|--------|--------------------|-------------------------------------|
+| ------ | ------------------ | ----------------------------------- |
 | POST   | /clients           | Create a client                     |
 | GET    | /clients           | Get all your clients (admin = all)  |
 | GET    | /clients/:id/loans | Get all loans for a specific client |
 
 ### 💰 Loans (authenticated)
-| Method | Route     | Description                      |
-|--------|-----------|----------------------------------|
-| POST   | /loans    | Create a loan for a client       |
+
+| Method | Route  | Description                |
+| ------ | ------ | -------------------------- |
+| POST   | /loans | Create a loan for a client |
 
 ---
 
@@ -70,3 +73,4 @@ A backend API for managing loan applications, clients, and user accounts using N
 ```bash
 git clone https://github.com/chimfwembeC/loan-app-challenge.git
 cd loan-app
+```

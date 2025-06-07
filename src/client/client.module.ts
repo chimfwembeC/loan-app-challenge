@@ -6,10 +6,7 @@ import { Client } from './client.entity';
 import { LoanModule } from 'src/loan/loan.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Client]),
-    forwardRef(() => LoanModule),
-    ],
+  imports: [TypeOrmModule.forFeature([Client]), forwardRef(() => LoanModule)],
   providers: [ClientService],
   controllers: [ClientController],
   exports: [ClientService, TypeOrmModule],

@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client } from './client.entity';
-import { CreateClientDto } from './client.dto';
+import { CreateClientDto, UpdateClientDto } from './client.dto';
 import { User } from 'src/users/user.entity';
 import { Loan } from 'src/loan/loan.entity';
 
@@ -24,14 +24,14 @@ export class ClientService {
         relations: ['user', 'loans'],
       });
     }
-  
+
     // Regular user can only see their own clients
     return this.clientRepository.find({
       where: { user: { userId: user.userId } },
       relations: ['user', 'loans'],
     });
   }
-  
+
   async createClient(dto: CreateClientDto, user: User): Promise<Client> {
     const existsNationalId = await this.clientRepository.findOne({
       where: { nationalId: dto.nationalId },
@@ -55,6 +55,27 @@ export class ClientService {
     return this.clientRepository.save(client);
   }
 
+  async updateClient(
+    id: number,
+    dto: UpdateClientDto,
+    user: User,
+  ): Promise<Client> {
+    const client = await this.clientRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
+
+    if (!client) {
+      throw new NotFoundException('Client not found');
+    }
+
+    if (user.role !== 'admin' && client.user.userId !== user.userId) {
+      throw new BadRequestException('Unauthorized to update this client');
+    }
+
+    Object.assign(client, dto);
+    return this.clientRepository.save(client);
+  }
 
   async findClientById(id: number, user: User): Promise<Client> {
     const client = await this.clientRepository.findOne({

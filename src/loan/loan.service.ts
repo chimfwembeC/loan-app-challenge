@@ -1,9 +1,14 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Loan } from './loan.entity';
 import { Repository } from 'typeorm';
-import { CreateLoanDto } from './loan.dto';
+import { CreateLoanDto, UpdateLoanDto } from './loan.dto';
 import { Client } from 'src/client/client.entity';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class LoanService {
@@ -28,7 +33,9 @@ export class LoanService {
       throw new BadRequestException('Client not found or not authorized');
     }
 
-    const hasActiveLoan = client.loans?.some((loan) => loan.status === 'active');
+    const hasActiveLoan = client.loans?.some(
+      (loan) => loan.status === 'active',
+    );
     if (hasActiveLoan) {
       throw new BadRequestException('Client already has an active loan');
     }
@@ -37,6 +44,26 @@ export class LoanService {
       ...dto,
       client,
     });
+
+    return this.loanRepository.save(loan);
+  }
+
+  async updateLoan(id: number, dto: UpdateLoanDto, user: User): Promise<Loan> {
+    const loan = await this.loanRepository.findOne({
+      where: { id },
+      relations: ['client', 'client.user'],
+    });
+
+    if (!loan) {
+      throw new NotFoundException('Loan not found');
+    }
+
+    // Authorization check: allow admins or the owner of the loan
+    if (user.role !== 'admin' && loan.client.user.userId !== user.userId) {
+      throw new BadRequestException('Unauthorized to update this loan');
+    }
+
+    Object.assign(loan, dto); // Merge changes from DTO into the entity
 
     return this.loanRepository.save(loan);
   }

@@ -1,6 +1,12 @@
-import { Loan } from "src/loan/loan.entity";
-import { User } from "src/users/user.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Loan } from 'src/loan/loan.entity';
+import { User } from 'src/users/user.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Client {
