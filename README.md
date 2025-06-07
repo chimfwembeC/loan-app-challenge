@@ -102,8 +102,8 @@ Your API should now be running at [http://localhost:3000](http://localhost:3000)
 | ------ | -------------- | ---------------------------- |
 | POST   | /auth/register | Register a new user          |
 | POST   | /auth/login    | Login and get JWT            |
-| GET    | /auth/profile  | Get logged-in user info      |
-| PATCH  | /auth/profile  | Update logged-in user's info |
+| GET    | /auth/me  | Get -in user info      |
+
 
 ### 👤 Clients (authenticated)
 
@@ -128,4 +128,4 @@ Your API should now be running at [http://localhost:3000](http://localhost:3000)
 * Users can only manage their own clients and loans
 * Admins have full access to all data
 
----
+---logged
