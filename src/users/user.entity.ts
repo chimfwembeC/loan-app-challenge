@@ -1,5 +1,6 @@
-import { Client } from 'src/client/client.entity';
-import { Loan } from 'src/loan/loan.entity';
+
+import { Loan } from '../../src/loan/loan.entity';
+import { Client } from '../../src/client/client.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

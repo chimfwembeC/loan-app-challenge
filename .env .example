@@ -4,5 +4,5 @@ DB_USERNAME=postgres
 DB_PASSWORD=postgres
 DB_NAME=loan_db
 
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=supersecret123
 JWT_EXPIRES_IN=1d

@@ -1,5 +1,5 @@
-import { Client } from 'src/client/client.entity';
-import { User } from 'src/users/user.entity';
+import { Client } from '../../src/client/client.entity';
+import { User } from '../../src/users/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
