@@ -102,7 +102,7 @@ Your API should now be running at [http://localhost:3000](http://localhost:3000)
 | ------ | -------------- | ---------------------------- |
 | POST   | /auth/register | Register a new user          |
 | POST   | /auth/login    | Login and get JWT            |
-| GET    | /auth/me  | Get -in user info      |
+| GET    | /auth/me  | Get auth user info      |
 
 
 ### 👤 Clients (authenticated)
